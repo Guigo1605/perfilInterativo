@@ -1,0 +1,308 @@
+<!DOCTYPE html> <!-- Define que o documento é um HTML5 -->
+<html lang="pt-br"> <!-- Define o idioma da página como português do Brasil -->
+<head> <!-- Início da seção de cabeçalho da página -->
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Define a escala e o ajuste da largura para dispositivos móveis -->
+    <title>Perfil Interativo</title> <!-- Define o título da página exibido na aba do navegador -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Importa o arquivo CSS do Bootstrap da CDN -->
+    <style>
+        /* Início da seção de estilo da página */
+        body { /* Seleciona o elemento <body> para aplicar estilos */
+            background-color: #f8f9fa; /* Define a cor de fundo da página */
+            font-family: Arial, sans-serif; /* Define a fonte principal da página */
+            display: flex; /* Define o layout do corpo da página como flexbox */
+            justify-content: center; /* Alinha o conteúdo horizontalmente no centro */
+            align-items: center; /* Alinha o conteúdo verticalmente no centro */
+            height: 100vh; /* Define a altura do corpo como 100% da altura da janela de visualização */
+            margin: 0; /* Remove qualquer margem padrão da página */
+        }
+    
+        .container { /* Seleciona a classe "container" para aplicar estilos */
+            display: flex; /* Define o layout do container como flexbox */
+            justify-content: center; /* Alinha o conteúdo horizontalmente no centro */
+            align-items: center; /* Alinha o conteúdo verticalmente no centro */
+            width: 100%; /* Define a largura do container como 100% */
+            height: 100%; /* Define a altura do container como 100% */
+        }
+    
+        #profileCard { /* Seleciona o elemento com id "profileCard" para aplicar estilos */
+            width: 100%; /* Define a largura do card como 100% do elemento pai */
+            max-width: 1000px; /* Define a largura máxima do card como 1000px */
+            height: 100%; /* Define a altura do card como 100% do elemento pai */
+            padding: 20px; /* Define o preenchimento interno do card como 20px em todos os lados */
+            border-radius: 10px; /* Define bordas arredondadas para o card com raio de 10px */
+            background-color: #fff; /* Define a cor de fundo do card como branca */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aplica uma sombra suave ao redor do card para dar profundidade */
+            text-align: center; /* Alinha o texto dentro do card ao centro */
+            display: flex; /* Define o layout do card como flexbox */
+            flex-direction: column; /* Organiza os itens dentro do card na direção vertical */
+            justify-content: center; /* Alinha os itens dentro do card ao centro verticalmente */
+            align-items: center; /* Alinha os itens dentro do card ao centro horizontalmente */
+        }
+    
+        #profileImageArea { /* Seleciona o elemento com id "profileImageArea" para aplicar estilos */
+            position: relative; /* Define a posição do elemento como relativa, permitindo posicionamento absoluto de filhos */
+            display: inline-block; /* Define o elemento como bloco em linha para se ajustar ao conteúdo */
+            width: 150px; /* Define a largura da área de imagem do perfil como 150px */
+            height: 150px; /* Define a altura da área de imagem do perfil como 150px */
+            margin-bottom: 15px; /* Adiciona uma margem inferior de 15px */
+            cursor: pointer; /* Define o cursor como mãozinha para indicar interatividade */
+            border-radius: 50%; /* Arredonda os cantos da área da imagem para torná-la circular */
+            border: 2px solid #ddd; /* Adiciona uma borda cinza clara de 2px ao redor da área de imagem */
+        }
+    
+        #profileImage { /* Seleciona o elemento com id "profileImage" para aplicar estilos */
+            width: 100%; /* Define a largura da imagem do perfil como 100% do seu contêiner */
+            height: 100%; /* Define a altura da imagem do perfil como 100% do seu contêiner */
+            border-radius: 50%; /* Arredonda os cantos da imagem para que ela seja exibida como um círculo */
+        }
+    
+        #imageOverlay { /* Seleciona o elemento com id "imageOverlay" para aplicar estilos */
+            position: absolute; /* Define a posição do sobrepor como absoluta, permitindo que se sobreponha à imagem */
+            top: 0; /* Define o topo do overlay como 0, posicionando-o no topo do elemento pai */
+            left: 0; /* Define a distância da borda esquerda do overlay como 0, posicionando-o à esquerda do elemento pai */
+            width: 100%; /* Define a largura do overlay como 100% do elemento pai */
+            height: 100%; /* Define a altura do overlay como 100% do elemento pai */
+            background-color: rgba(128, 128, 128, 0.5); /* Define a cor de fundo do overlay com uma transparência de 50% */
+            color: white; /* Define a cor do texto dentro do overlay como branca */
+            display: flex; /* Define o layout do overlay como flexbox */
+            justify-content: center; /* Alinha o conteúdo horizontalmente no centro */
+            align-items: center; /* Alinha o conteúdo verticalmente no centro */
+            font-size: 16px; /* Define o tamanho da fonte dentro do overlay como 16px */
+            border-radius: 50%; /* Arredonda os cantos do overlay para que ele seja circular */
+            opacity: 0; /* Define a opacidade inicial do overlay como invisível (0) */
+            transition: opacity 0.3s ease; /* Aplica uma transição suave de 0,3 segundos na opacidade */
+            cursor: pointer; /* Define o cursor como mãozinha, indicando interatividade */
+        }
+    
+        #profileImageArea:hover #imageOverlay { /* Quando o usuário passar o mouse sobre a área da imagem, afeta o overlay */
+            opacity: 1; /* Torna o overlay visível, alterando a opacidade para 1 */
+        }
+    
+        .hobby-item { /* Seleciona os itens com a classe "hobby-item" para aplicar estilos */
+            position: relative; /* Define a posição dos itens como relativa, permitindo posicionamento absoluto de elementos filhos */
+            padding: 10px; /* Define o preenchimento interno dos itens como 10px */
+            margin-bottom: 10px; /* Adiciona uma margem inferior de 10px */
+            border-radius: 8px; /* Arredonda os cantos dos itens com um raio de 8px */
+            background-color: #ffffff; /* Define o fundo dos itens como branco */
+            border: 1px solid #ddd; /* Define uma borda de 1px, com cor cinza clara (#ddd) */
+            transition: background-color 0.3s; /* Aplica uma transição suave na cor de fundo dos itens */
+        }
+    
+        .hobby-item:hover { /* Quando o usuário passar o mouse sobre um item de hobby, aplica o estilo abaixo */
+            background-color: #e9ecef; /* Altera a cor de fundo do item para um tom cinza claro quando o item é "hovered" */
+        }
+    
+        .delete-hobby { /* Seleciona o botão de excluir dentro dos itens de hobby para aplicar estilos */
+            position: absolute; /* Define a posição do botão como absoluta dentro do elemento pai */
+            top: 5px; /* Define o posicionamento do botão 5px a partir do topo do item de hobby */
+            right: 5px; /* Define o posicionamento do botão 5px a partir da borda direita do item de hobby */
+            font-size: 18px; /* Define o tamanho da fonte do botão de excluir como 18px */
+            color: red; /* Define a cor do texto (ícone ou conteúdo) como vermelha */
+            cursor: pointer; /* Define o cursor como mãozinha, indicando que o botão é clicável */
+            display: none; /* Inicialmente, oculta o botão de excluir */
+        }
+    
+        .hobby-item:hover .delete-hobby { /* Quando o item de hobby é "hovered", o botão de excluir se torna visível */
+            display: block; /* Torna o botão de excluir visível quando o mouse passa sobre o item */
+        }
+    
+        .btn-group { /* Seleciona o grupo de botões para aplicar estilos */
+            display: flex; /* Define o layout do grupo de botões como flexbox */
+            justify-content: center; /* Alinha os botões horizontalmente no centro do contêiner */
+            flex-wrap: wrap; /* Permite que os botões se quebrem para a linha seguinte se não houver espaço suficiente */
+            gap: 10px; /* Define um espaço de 10px entre os botões */
+        }
+    
+        .btn-group .btn { /* Aplica estilos aos botões dentro do grupo de botões */
+            flex: 1 1 100%; /* Faz com que cada botão ocupe 100% da largura disponível em dispositivos menores */
+        }
+    
+        .section-title { /* Seleciona o título das seções para aplicar estilos */
+            margin-top: 20px; /* Adiciona uma margem superior de 20px ao título da seção, afastando-o de elementos acima */
+            font-size: 20px; /* Define o tamanho da fonte do título da seção como 20px */
+            font-weight: bold; /* Define a fonte do título como negrito */
+        }
+    
+        @media (max-width: 576px) { /* Aplica estilos específicos para telas menores ou iguais a 576px (como dispositivos móveis) */
+            #profileImageArea { /* Estiliza a área da imagem do perfil em telas pequenas */
+                width: 120px; /* Define a largura da área da imagem do perfil como 120px em telas pequenas */
+                height: 120px; /* Define a altura da área da imagem do perfil como 120px em telas pequenas */
+            }
+    
+            #profileImage { /* Estiliza a imagem do perfil em telas pequenas */
+                width: 120px; /* Define a largura da imagem do perfil como 120px em telas pequenas */
+                height: 120px; /* Define a altura da imagem do perfil como 120px em telas pequenas */
+            }
+    
+            .container { /* Estiliza o container em telas pequenas */
+                padding-left: 15px; /* Adiciona um preenchimento de 15px à esquerda do container */
+                padding-right: 15px; /* Adiciona um preenchimento de 15px à direita do container */
+            }
+    
+            .btn-group .btn { /* Estiliza os botões dentro de um grupo de botões em telas pequenas */
+                flex: 1 1 100%; /* Faz com que cada botão ocupe 100% da largura do grupo de botões */
+            }
+        }
+    
+        #imageOptionsModal .modal-body { /* Estiliza o corpo do modal de opções de imagem */
+            text-align: center; /* Alinha o texto dentro do corpo do modal ao centro */
+        }
+    
+        .image-gallery img { /* Seleciona as imagens dentro de uma galeria de imagens para aplicar estilos */
+            width: 50px; /* Define a largura das imagens como 50px */
+            height: 50px; /* Define a altura das imagens como 50px */
+            border-radius: 5px; /* Arredonda os cantos das imagens com um raio de 5px */
+            margin: 5px; /* Adiciona uma margem de 5px ao redor de cada imagem */
+            cursor: pointer; /* Define o cursor como mãozinha, indicando que as imagens são interativas */
+            transition: transform 0.2s; /* Aplica uma transição suave de 0,2 segundos ao efeito de transformação */
+        }
+    
+        .image-gallery img:hover { /* Quando o usuário passar o mouse sobre as imagens da galeria, aplica o estilo abaixo */
+            transform: scale(1.2); /* Aumenta o tamanho da imagem em 20% quando o mouse passar sobre ela */
+        }
+    
+    </style>    
+</head>
+<body> <!-- Início do corpo da página -->
+    <div class="container"> <!-- Cria um container para centralizar e organizar os elementos da página -->
+        <div class="card" id="profileCard"> <!-- Cria um card de perfil com um id "profileCard" -->
+            <div id="profileImageArea" class="mb-3" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" onclick="abrirModalDeAlteracaoDeFoto()"> <!-- Define a área de imagem do perfil, com eventos para manipulação de arrastar e soltar e clique -->
+                <img src="https://via.placeholder.com/150" alt="Imagem de Perfil" id="profileImage" class="rounded-circle"> <!-- Exibe uma imagem de perfil redonda com um link de imagem de espaço reservado -->
+                <div id="imageOverlay">Alterar Foto</div> <!-- Sobreposição de texto que aparece na área de imagem, indicando a opção de alterar a foto -->
+            </div>
+            <h3 id="profileName">Nome Meu Perfil</h3> <!-- Exibe o nome do perfil -->
+            <p id="profileAge">Idade: 18</p> <!-- Exibe a idade do perfil -->
+            <h5>Hobbies:</h5> <!-- Exibe o título "Hobbies" -->
+            <ul id="hobbiesList" class="list-group mb-3"> <!-- Cria uma lista não ordenada para os hobbies -->
+                <li class="list-group-item hobby-item">Leitura <span class="delete-hobby" onclick="excluirHobby(event)">×</span></li> <!-- Exibe um hobby e um botão para excluir -->
+                <li class="list-group-item hobby-item">Esportes <span class="delete-hobby" onclick="excluirHobby(event)">×</span></li> <!-- Exibe outro hobby e um botão para excluir -->
+                <li class="list-group-item hobby-item">Músicas <span class="delete-hobby" onclick="excluirHobby(event)">×</span></li> <!-- Exibe mais um hobby e um botão para excluir -->
+            </ul>
+            <div class="btn-group"> <!-- Cria um grupo de botões para ações relacionadas ao perfil -->
+                <button class="btn btn-primary" onclick="alterarNome()">Alterar Nome</button> <!-- Botão para alterar o nome, chama a função alterarNome() ao ser clicado -->
+                <button class="btn btn-secondary" onclick="alterarIdade()">Alterar Idade</button> <!-- Botão para alterar a idade, chama a função alterarIdade() ao ser clicado -->
+                <button class="btn btn-success" onclick="adicionarHobby()">Adicionar Hobby</button> <!-- Botão para adicionar um novo hobby, chama a função adicionarHobby() ao ser clicado -->
+                <button class="btn btn-warning" onclick="mudarCorDeFundo()">Mudar Cor de Fundo</button> <!-- Botão para mudar a cor de fundo, chama a função mudarCorDeFundo() ao ser clicado -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageOptionsModal" tabindex="-1" aria-labelledby="imageOptionsModalLabel" aria-hidden="true"> <!-- Modal para opções de alteração de foto -->
+        <div class="modal-dialog"> <!-- Diálogo/modal onde as opções de alteração de foto são apresentadas -->
+            <div class="modal-content"> <!-- Conteúdo do modal -->
+                <div class="modal-header"> <!-- Cabeçalho do modal -->
+                    <h5 class="modal-title" id="imageOptionsModalLabel">Escolha uma opção para alterar a foto</h5> <!-- Título do modal -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> <!-- Botão para fechar o modal -->
+                </div>
+                <div class="modal-body"> <!-- Corpo do modal com as opções de alteração de foto -->
+                    <button class="btn btn-primary mb-2" onclick="abrirExploradorDeArquivos()">Selecionar imagem do arquivo</button><br> <!-- Botão para abrir o explorador de arquivos para escolher uma imagem -->
+                    <button class="btn btn-info mb-2" onclick="alterarFotoPorLink()">Inserir link da imagem</button><br> <!-- Botão para inserir o link de uma imagem diretamente -->
+                    <span>Ou arraste e solte a imagem diretamente aqui.</span> <!-- Instrução para o usuário arrastar e soltar a imagem diretamente no modal -->
+
+                    <h6 class="mt-3">Ou escolha uma das imagens pré-salvas:</h6> <!-- Título para a seção de imagens pré-salvas -->
+                    <div class="image-gallery"> <!-- Galeria de imagens pré-salvas -->
+                        <img src="https://w7.pngwing.com/pngs/312/283/png-transparent-man-s-face-avatar-computer-icons-user-profile-business-user-avatar-blue-face-heroes-thumbnail.png" alt="Imagem 1" onclick="alterarFotoPorImagem('https://w7.pngwing.com/pngs/312/283/png-transparent-man-s-face-avatar-computer-icons-user-profile-business-user-avatar-blue-face-heroes-thumbnail.png')"> <!-- Imagem 1 da galeria, ao ser clicada, altera a foto de perfil -->
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyFmBCFfrKGnUCXabdJm-oQmQ-fwUU23HOrlYVKqbA1njKWnjVvMAcFhcPYEzXm_ehfNg&usqp=CAU" alt="Imagem 2" onclick="alterarFotoPorImagem('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyFmBCFfrKGnUCXabdJm-oQmQ-fwUU23HOrlYVKqbA1njKWnjVvMAcFhcPYEzXm_ehfNg&usqp=CAU')"> <!-- Imagem 2 da galeria, ao ser clicada, altera a foto de perfil -->
+                        <img src="https://cdn-icons-png.flaticon.com/512/219/219969.png" alt="Imagem 3" onclick="alterarFotoPorImagem('https://cdn-icons-png.flaticon.com/512/219/219969.png')"> <!-- Imagem 3 da galeria, ao ser clicada, altera a foto de perfil -->
+                        <img src="https://cdn-icons-png.flaticon.com/512/6997/6997662.png" alt="Imagem 4" onclick="alterarFotoPorImagem('https://cdn-icons-png.flaticon.com/512/6997/6997662.png')"> <!-- Imagem 4 da galeria, ao ser clicada, altera a foto de perfil -->
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Fim do conteúdo do modal e da galeria de imagens pré-salvas -->
+    </div> <!-- Fim do modal de opções de imagem -->
+
+    <input type="file" id="fileInput" style="display:none;" onchange="alterarFotoArquivo(event)"> <!-- Campo de input de arquivo, oculto, usado para selecionar uma imagem do computador -->
+
+    <script> <!-- Início do bloco de código JavaScript -->
+        function mudarCorDeFundo() { <!-- Função para mudar a cor de fundo da página -->
+            const cores = ["#f8d7da", "#d4edda", "#fff3cd", "#cce5ff", "#d1ecf1"]; <!-- Array de cores de fundo possíveis -->
+            const corAleatoria = cores[Math.floor(Math.random() * cores.length)]; <!-- Escolhe uma cor aleatória da lista de cores -->
+            document.body.style.backgroundColor = corAleatoria; <!-- Aplica a cor escolhida ao fundo da página -->
+        }
+
+        function alterarNome() { <!-- Função para alterar o nome do perfil -->
+            const novoNome = prompt("Digite o novo nome:"); <!-- Exibe um prompt para o usuário digitar o novo nome -->
+            if (novoNome) { <!-- Se o usuário fornecer um nome -->
+                document.getElementById("profileName").innerText = novoNome; <!-- Altera o nome exibido no perfil -->
+            }
+        }
+
+        function alterarIdade() { <!-- Função para alterar a idade do perfil -->
+            const novaIdade = prompt("Digite a nova idade:"); <!-- Exibe um prompt para o usuário digitar a nova idade -->
+            if (novaIdade) { <!-- Se o usuário fornecer uma idade -->
+                document.getElementById("profileAge").innerText = `Idade: ${novaIdade}`; <!-- Altera a idade exibida no perfil -->
+            }
+        }
+
+        function adicionarHobby() { <!-- Função para adicionar um novo hobby ao perfil -->
+            const hobbyName = prompt("Qual hobby você deseja adicionar?"); <!-- Exibe um prompt para o usuário digitar o nome do hobby -->
+            if (hobbyName) { <!-- Se o usuário fornecer um nome de hobby -->
+                const hobbyItem = document.createElement('li'); <!-- Cria um novo elemento de lista para o hobby -->
+                hobbyItem.classList.add('list-group-item', 'hobby-item'); <!-- Adiciona as classes para estilizar o item da lista -->
+                hobbyItem.innerHTML = `${hobbyName} <span class="delete-hobby" onclick="excluirHobby(event)">×</span>`; <!-- Insere o nome do hobby e um botão de exclusão -->
+                document.getElementById("hobbiesList").appendChild(hobbyItem); <!-- Adiciona o novo item à lista de hobbies -->
+            }
+        }
+
+        function excluirHobby(event) { <!-- Função para excluir um hobby da lista -->
+            event.target.closest('.hobby-item').remove(); <!-- Remove o item de hobby clicado -->
+        }
+
+        function abrirModalDeAlteracaoDeFoto() { <!-- Função que abre o modal para alterar a foto -->
+            const modal = new bootstrap.Modal(document.getElementById('imageOptionsModal')); <!-- Cria uma instância do modal usando a biblioteca Bootstrap -->
+            modal.show(); <!-- Exibe o modal na tela -->
+        }
+
+        function alterarFotoPorLink() { <!-- Função que altera a foto do perfil via link -->
+            const linkImagem = prompt("Digite o link da nova imagem:"); <!-- Exibe um prompt para o usuário inserir um link de imagem -->
+            if (linkImagem) { <!-- Se o link for válido -->
+                document.getElementById("profileImage").src = linkImagem; <!-- Atualiza a imagem de perfil com o link fornecido -->
+                const modal = bootstrap.Modal.getInstance(document.getElementById('imageOptionsModal')); <!-- Obtém a instância do modal -->
+                modal.hide(); <!-- Fecha o modal após a alteração -->
+            }
+        }
+
+        function alterarFotoPorImagem(url) { <!-- Função para alterar a foto do perfil selecionando uma imagem pré-salva -->
+            document.getElementById("profileImage").src = url; <!-- Atualiza a imagem de perfil com a URL da imagem selecionada -->
+            const modal = bootstrap.Modal.getInstance(document.getElementById('imageOptionsModal')); <!-- Obtém a instância do modal -->
+            modal.hide(); <!-- Fecha o modal após a alteração -->
+        }
+
+        function abrirExploradorDeArquivos() { <!-- Função que abre o explorador de arquivos para selecionar uma imagem do computador -->
+            document.getElementById("fileInput").click(); <!-- Dispara o clique no input de arquivo oculto -->
+        }
+
+        function alterarFotoArquivo(event) { <!-- Função que altera a foto do perfil com uma imagem carregada do computador -->
+            const file = event.target.files[0]; <!-- Obtém o arquivo selecionado -->
+            if (file) { <!-- Se o arquivo for válido -->
+                const reader = new FileReader(); <!-- Cria um objeto FileReader para ler o arquivo -->
+                reader.onload = function(e) { <!-- Função de callback quando o arquivo é carregado -->
+                    document.getElementById("profileImage").src = e.target.result; <!-- Atualiza a imagem de perfil com a imagem carregada -->
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('imageOptionsModal')); <!-- Obtém a instância do modal -->
+                    modal.hide(); <!-- Fecha o modal após a alteração -->
+                }
+                reader.readAsDataURL(file); <!-- Lê o arquivo como uma URL de dados -->
+            }
+        }
+
+        function handleDragOver(event) { <!-- Função para lidar com o evento de arrastar sobre a área de imagem -->
+            event.preventDefault(); <!-- Impede o comportamento padrão do navegador (não permite o efeito de arrastar) -->
+        }
+
+        function handleDrop(event) { <!-- Função para lidar com o evento de soltar o arquivo sobre a área de imagem -->
+            event.preventDefault(); <!-- Impede o comportamento padrão do navegador (não permite o efeito de arrastar) -->
+            const file = event.dataTransfer.files[0]; <!-- Obtém o arquivo solto -->
+            if (file) { <!-- Se o arquivo for válido -->
+                const reader = new FileReader(); <!-- Cria um objeto FileReader para ler o arquivo -->
+                reader.onload = function(e) { <!-- Função de callback quando o arquivo é carregado -->
+                    document.getElementById("profileImage").src = e.target.result; <!-- Atualiza a imagem de perfil com a imagem carregada -->
+                }
+                reader.readAsDataURL(file); <!-- Lê o arquivo como uma URL de dados -->
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> <!-- Importação do Bootstrap para funcionalidades de modal e componentes interativos -->
+</body>
+</html>
